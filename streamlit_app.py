@@ -43,15 +43,6 @@ if ingredients_list:
         session.sql(my_insert_stmt).collect()
         st.success(f"✅ Your Smoothie is ordered, {name_on_order}!", icon="✅")
 
-# Pick one fruit to see its nutrition info
-fruit_chosen = st.selectbox("🍓 Pick a fruit to see its nutrition info:", fruit_options)
-
-if fruit_chosen:
-    try:
-        api_url = f"https://my.smoothiefroot.com/api/fruit/{fruit_chosen.lower()}"
-        response = requests.get(api_url, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-        st.dataframe(data, use_container_width=True)
-    except Exception:
-        st.error("❌ Could not load nutrition info. The API returned an error or invalid data.")
+import requests
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response)
